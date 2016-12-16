@@ -1,14 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-
 /**
  * Created by graf on 28.11.2016.
  */
-public abstract class AbstractSashaListTest {
+public abstract class AbstractMyImplementationListTest {
 
-    protected SashaList sal;
+    protected MyImplementationList sal;
 
     @Test
     public void testToArray(){
@@ -90,8 +88,36 @@ public abstract class AbstractSashaListTest {
         sal.addToBeginning(3);
         sal.addToBeginning(2);
         sal.addToBeginning(1);
+//        sal.toString();
         Assert.assertArrayEquals(expectedArray, sal.toArray());
         Assert.assertEquals(expectedArray.length, sal.size());
+    }
+
+    @Test
+    public void testAddToBeginning2(){
+        sal.clear();
+//        String expectedArray = "{1,2,3,4,5}";
+        int [] expectedArray = {1,2,3,4,5};
+        sal.addToBeginning(3);
+        sal.addToBeginning(2);
+        sal.addToBeginning(1);
+        sal.add(4);
+        sal.add(5);
+//        sal.toString();
+        Assert.assertArrayEquals(expectedArray, sal.toArray());
+        Assert.assertEquals(expectedArray.length, sal.size());
+    }
+
+    @Test
+    public void testAddToBeginningOneValue(){
+        int [] expectedArray = {1,2,3};
+        String expectedArrayString = "{1,2,3}";
+        sal.clear();
+        sal.add(2);
+        sal.add(3);
+        sal.addToBeginning(1);
+        Assert.assertArrayEquals(expectedArray, sal.toArray());
+        Assert.assertEquals(expectedArrayString, sal.toString());
     }
 
     @Test
@@ -148,6 +174,15 @@ public abstract class AbstractSashaListTest {
         Assert.assertArrayEquals(expectedArray, sal.toArray());
         Assert.assertEquals(expectedArray.length, sal.size());
     }
+    @Test (expected = ListIndexOutOfBoundException.class)
+    public void addToSpecifiedIndexOutOfBounds () throws ListIndexOutOfBoundException{
+        sal.clear();
+        sal.add(1);
+        sal.add(2);
+        sal.add(3);
+        sal.add(5, 4);
+//        Assert.assertFalse();
+    }
 
     @Test
     public void testContains(){
@@ -190,7 +225,19 @@ public abstract class AbstractSashaListTest {
         sal.remove(2);
         Assert.assertArrayEquals(expectedArray, sal.toArray());
         Assert.assertEquals(expectedArray.length, sal.size());
+    }
 
+    @Test
+    public void testRemoveLast(){
+        int [] expectedArray = {1,2,3};
+        sal.clear();
+        sal.add(1);
+        sal.add(2);
+        sal.add(3);
+        sal.add(4);
+        sal.remove(3);
+        Assert.assertArrayEquals(expectedArray, sal.toArray());
+        Assert.assertEquals(expectedArray.length, sal.size());
     }
 
     @Test
@@ -203,5 +250,34 @@ public abstract class AbstractSashaListTest {
         sal.remove(0);
         Assert.assertArrayEquals(expectedArray2, sal.toArray());
         Assert.assertEquals(expectedArray2.length, sal.size());
+    }
+
+    @Test (expected = ListIndexOutOfBoundException.class)
+    public void testRemoveOutOfBoundary(){
+        sal.clear();
+        sal.add(1);
+        sal.add(2);
+        sal.add(3);
+        sal.remove(6);
+    }
+
+
+    @Test
+    public void testSet(){
+        int [] expectedArray = {1,2};
+        sal.clear();
+        sal.add(1);
+        sal.add(3);
+        sal.set(1, 2);
+        Assert.assertArrayEquals(expectedArray, sal.toArray());
+    }
+
+    @Test (expected = ListIndexOutOfBoundException.class)
+    public void testSetOutOfBoundary(){
+        sal.clear();
+        sal.add(1);
+        sal.add(2);
+        sal.add(3);
+        sal.set(6, 2);
     }
 }

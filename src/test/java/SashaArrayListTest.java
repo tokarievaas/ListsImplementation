@@ -7,14 +7,14 @@ import org.junit.Test;
 public class SashaArrayListTest {
 //    @Test
 //    public void testToArray(){
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        Assert.assertArrayEquals(new int[0], sal.toArray());
 //    }
 //
 //    @Test
 //    public void testAdd(){
 //        int [] expectedArray = {1,2};
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        sal.add(1);
 //        sal.add(2);
 //        Assert.assertArrayEquals(expectedArray, sal.toArray());
@@ -23,7 +23,7 @@ public class SashaArrayListTest {
 //    @Test
 //    public void testAddMoreThan4(){
 //        int [] expectedArray = {1,2,3,4,5};
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        sal.add(1);
 //        sal.add(2);
 //        sal.add(3);
@@ -36,7 +36,7 @@ public class SashaArrayListTest {
 //    public void testAddMoreThan8(){
 //        int [] expectedArray = {1,2,3,4,5,6,7,8,9};
 //
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        sal.add(1);
 //        sal.add(2);
 //        sal.add(3);
@@ -53,7 +53,7 @@ public class SashaArrayListTest {
 //    @Test
 //    public void testClear(){
 //        int [] expectedArray = {};
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        sal.add(1);
 //        sal.add(2);
 //        sal.clear();
@@ -64,7 +64,7 @@ public class SashaArrayListTest {
 //    @Test
 //    public void testToString(){
 //        String expectedArray = "{1,2,3,4,5}";
-//        SashaArrayList sal = new SashaArrayList();
+//        MyImplementationArrayList sal = new MyImplementationArrayList();
 //        sal.add(1);
 //        sal.add(2);
 //        sal.add(3);

@@ -1,55 +1,62 @@
 /**
- * Created by graf on 29.11.2016.
+ * Created by graf on 15.12.2016.
  */
-public class SashaLinkedList implements SashaList {
+public class LinkedListVersionTwo extends ParentForLists implements MyImplementationList {
     Node head;
-    int size;
+    Node tail;
 
     public void add(int value){
-        Node lastNode;
         if (size == 0){
             head = new Node(value);
+            tail = head;
         } else {
-            lastNode = getLastNode();
-            lastNode.next = new Node(value);
+            tail.next = new Node(value);
+            tail.next.previous = tail;
+            tail = tail.next;
         }
         size++;
     }
 
-    public void addToBeginning(int value) {
+    public void addToBeginning(int value) {  //!!!!
         Node newNode = new Node(value);
-        newNode.next = head;
+        if (size == 0){
+            head = new Node(value);
+            tail = head;
+        }
+
+        if (size == 1){
+            tail.previous = newNode;
+            newNode.next = tail;
+        } else {
+            head.previous = newNode;
+            newNode.next = head;
+        }
         head = newNode;
         size++;
     }
 
     public void add(int index, int value) {
+        ensureWithinBounds(index);
         if (index == 0) {
             addToBeginning(value);
             return;
         }
-        Node spesifiedNode = new Node(value);
+        Node newNode = new Node(value);
         Node tempNode = getSpesifiedNode(index - 1);
-        spesifiedNode.next = tempNode.next;
-        tempNode.next = spesifiedNode;
+        newNode.next = tempNode.next;
+        newNode.previous = tempNode.previous;
+        tempNode.next = newNode;
         size++;
     }
 
     private Node getSpesifiedNode(int index) {
+        ensureWithinBounds(index);
         Node specifiedNode = head;
         while ((index) != 0){
             specifiedNode = specifiedNode.next;
             index--;
         }
         return specifiedNode;
-    }
-
-    private Node getLastNode() {
-        Node lastNode = head;
-        while (lastNode.next != null) {
-            lastNode = lastNode.next;
-        }
-        return lastNode;
     }
 
     public void clear(){
@@ -70,24 +77,29 @@ public class SashaLinkedList implements SashaList {
     }
 
     public int get(int index) {
-        if (index < 0 || index >= size){
-            throw new ListIndexOutOfBoundException();
-        }
+        ensureWithinBounds(index);
         return getSpesifiedNode(index).value;
     }
 
     public void remove(int index) {
+        ensureWithinBounds(index);
         if (index == 0){
             head = head.next;
         } else {
-            Node previousNode = getSpesifiedNode(index - 1);
-            previousNode.next = previousNode.next.next;
+            if (index == size - 1) {
+                tail = tail.previous;
+                tail.next = null;
+            } else {
+                Node previousNode = getSpesifiedNode(index - 1);
+                previousNode.next = previousNode.next.next;
+            }
         }
         size--;
     }
 
     public void set(int index, int value) {
-
+        ensureWithinBounds(index);
+        getSpesifiedNode(index).value = value;
     }
 
     public int size(){
@@ -123,6 +135,7 @@ public class SashaLinkedList implements SashaList {
 
         int value;
         Node next;
+        Node previous;
 
         public Node(int i) {
             value = i;
