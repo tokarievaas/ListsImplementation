@@ -1,11 +1,13 @@
-/**
- * Created by graf on 15.12.2016.
- */
-public class LinkedListVersionTwo extends ParentForLists implements MyImplementationList {
+package com.tokarieva;
+
+import java.io.Serializable;
+import java.util.Iterator;
+
+public class MyLinkedList<E> extends AbstractList<E> implements Serializable{//} implements IList<E> {
     Node head;
     Node tail;
 
-    public void add(int value){
+    public void add(E value){
         if (size == 0){
             head = new Node(value);
             tail = head;
@@ -17,7 +19,7 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         size++;
     }
 
-    public void addToBeginning(int value) {  //!!!!
+    public void addToBeginning(E value) {
         Node newNode = new Node(value);
         if (size == 0){
             head = new Node(value);
@@ -35,7 +37,7 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         size++;
     }
 
-    public void add(int index, int value) {
+    public void add(int index, E value) {
         ensureWithinBounds(index);
         if (index == 0) {
             addToBeginning(value);
@@ -49,22 +51,12 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         size++;
     }
 
-    private Node getSpesifiedNode(int index) {
-        ensureWithinBounds(index);
-        Node specifiedNode = head;
-        while ((index) != 0){
-            specifiedNode = specifiedNode.next;
-            index--;
-        }
-        return specifiedNode;
-    }
-
     public void clear(){
+        super.clear();
         head = null;
-        size = 0;
     }
 
-    public boolean contains(int value) {
+    public boolean contains(E value) {
         Node node = head;
 
         for (int i = 0; i < size; i++){
@@ -76,9 +68,9 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         return false;
     }
 
-    public int get(int index) {
+    public E get(int index) {
         ensureWithinBounds(index);
-        return getSpesifiedNode(index).value;
+        return (E)getSpesifiedNode(index).value;
     }
 
     public void remove(int index) {
@@ -97,13 +89,26 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         size--;
     }
 
-    public void set(int index, int value) {
-        ensureWithinBounds(index);
-        getSpesifiedNode(index).value = value;
+    public void remove(E value){
+        Node node = head;
+        int index = -1;
+
+        for (int i = 0; i < size; i++){
+            if (node.value.equals(value)) {
+                index = i;
+            }
+            node = node.next;
+        }
+        if (index == -1) {
+            System.out.println("No such element!");
+        } else {
+            remove(index);
+        }
     }
 
-    public int size(){
-        return size;
+    public void set(int index, E value) {
+        ensureWithinBounds(index);
+        getSpesifiedNode(index).value = value;
     }
 
     public String toString(){
@@ -117,28 +122,70 @@ public class LinkedListVersionTwo extends ParentForLists implements MyImplementa
         return "{" + listToString.substring(0, listToString.length() - 1) + "}";
     }
 
-    public int[] toArray(){
+    public E[] toArray(){
 
         Node currentNode = head;
         int index = 0;
-        int [] arrayToReturn = new int[size];
+        E [] arrayToReturn = (E[])new Object[size];
 
         while (currentNode != null){
-            arrayToReturn[index] = currentNode.value;
+            arrayToReturn[index] = (E) currentNode.value;
             index++;
             currentNode = currentNode.next;
         }
         return arrayToReturn;
     }
 
-    private class Node {
+    public Iterator <E> iterator(){
+        return new Iterator<E>() {
+            Node<E> node = head;
+            public boolean hasNext() {
+                if (node != null){
+                    return true;
+                }
+                return false;
+            }
 
-        int value;
-        Node next;
-        Node previous;
+            public E next() {
+                E value = node.value;
+                node = node.next;
+                return value;
+            }
+        };
+    }
 
-        public Node(int i) {
+    public boolean equals(Object other){
+        if (!(other instanceof MyLinkedList)){
+            return false;
+        }
+        return super.equals(other);
+
+    }
+
+    private class Node<E> {
+
+        E value;
+        Node<E> next;
+        Node<E> previous;
+
+        public Node(E i) {
             value = i;
         }
     }
+
+
+    private Node getSpesifiedNode(int index) {
+        ensureWithinBounds(index);
+        Node specifiedNode = head;
+        while ((index) != 0){
+            specifiedNode = specifiedNode.next;
+            index--;
+        }
+        return specifiedNode;
+    }
+
+    private void meth1(int i, char z){}
+    private void meth1(char i, int z){}
+
+
 }

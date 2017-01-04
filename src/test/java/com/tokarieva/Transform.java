@@ -1,9 +1,8 @@
+package com.tokarieva;
+
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by graf on 16.12.2016.
- */
 public class Transform {
     public long milisToSecs(long milis){
         return milis/1000;

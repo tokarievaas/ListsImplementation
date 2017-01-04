@@ -1,6 +1,5 @@
-/**
- * Created by graf on 30.11.2016.
- */
+package com.tokarieva.exception;
+
 public class ListIndexOutOfBoundException extends RuntimeException {
 
 }
